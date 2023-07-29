@@ -1,15 +1,15 @@
-import "../src/TodoSearch.css";
 import React from 'react';
+import './TodoSearch.css';
 
-function TodoSearch() {
-    const [searchValue, setSearchValue] = React.useState('');
-
-    console.log('Users search todo of ' 
-    + searchValue);
+function TodoSearch({
+  searchValue,
+  setSearchValue,
+}) {
   return (
     <input
       placeholder="Cortar cebolla"
       className="TodoSearch"
+      value={searchValue}
       onChange={(event) => {
         setSearchValue(event.target.value);
       }}
@@ -18,25 +18,3 @@ function TodoSearch() {
 }
 
 export { TodoSearch };
-
-
-
-function TodoClick() {
-    let [ state, setState] = React.useState(0);
-    return (
-        <>
-        <p>Diste click {Sstate} veces</p>
-        <buttom
-            onClick ={() => {
-                setState(state++)
-            }}
-            >Click</buttom>
-        </>
-    );
-}
-
-
-
-////
-
-
