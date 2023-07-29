@@ -1,3 +1,5 @@
+import '../src/TodoItem.css';
+
 function TodoItem() {
     return (
         <li>
