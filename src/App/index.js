@@ -1,9 +1,8 @@
 import React from 'react';
-import { TodoCounter } from '../TodoCounter/index';
-import { TodoSearch } from '../TodoSearch/index';
-import { TodoList } from '../TodoList/index';
-import { TodoItem } from '../TodoItem/index';
-import { CreateTodoButton } from '../CreateTodoButton/index';
+import { AppUI } from './AppUI';
+import { useLocalStorage } from './useLocalStorage';
+
+// localStorage.removeItem('TODOS_V1');
 
 // const defaultTodos = [
 //   { text: 'Cortar cebolla', completed: true },
@@ -14,24 +13,14 @@ import { CreateTodoButton } from '../CreateTodoButton/index';
 // ];
 
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
-// localStorage.removeItem('TODOS_V1');
 
 function App() {
-
-  //Local storage, if localStorageTodos tiene alguna info, voy a hacer una cosa y sino voy a dar un valor por defecto. La metodologia del error first trata de programar el error menos ideal primero. En el ejemplo abajo, si no hay localStorageTodos en ese caso, parsedTodos tiene que ser igual a un array vacio. Ademas localStorage debe guardarme un string vacio, ese string vacio lo stringifeamos y eso es lo que hacemos en caso de que sea la primera vez que un usuario accede a nuestra app. En el caso contrario, parsedTodos debe ser igual a lo que tengamos en parsedTodo peor pasandolo en JSON.parse que podemos enviarselo a su estado inicial. 
-
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-
-  let parsedTodos;
-  
-  if (!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos);
-  }
-  
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage('TODOS_V1', []);
   const [searchValue, setSearchValue] = React.useState('');
 
   const completedTodos = todos.filter(
@@ -47,18 +36,10 @@ function App() {
     }
   );
 
-  //Modify the state and the local Storage at the same time
-
-  const saveTodos = (newTodos) => {
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
-    
-    setTodos(newTodos);
-  };
-
   const completeTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todo) => todo.text == text
+      (todo) => todo.text === text
     );
     newTodos[todoIndex].completed = true;
     saveTodos(newTodos);
@@ -67,39 +48,25 @@ function App() {
   const deleteTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todo) => todo.text == text
+      (todo) => todo.text === text
     );
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
   };
   
   return (
-    <>
-      <TodoCounter
-        completed={completedTodos}
-        total={totalTodos} 
-      />
-      <TodoSearch
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
-
-      <TodoList>
-        {searchedTodos.map(todo => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={() => completeTodo(todo.text)}
-            onDelete={() => deleteTodo(todo.text)}
-          />
-        ))}
-      </TodoList>
-      
-      <CreateTodoButton />
-    </>
+    <AppUI
+      loading={loading}
+      error={error}
+      completedTodos={completedTodos}
+      totalTodos={totalTodos}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      completeTodo={completeTodo}
+      deleteTodo={deleteTodo}
+    />
   );
 }
 
 export default App;
-
