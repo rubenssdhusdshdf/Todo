@@ -1,13 +1,11 @@
-import React, { Children } from 'react'
-import { TodoCounter } from '../TodoCounter';
-import { TodoSearch } from '../TodoSearch';
+import React from 'react';
 
 function TodoHeader({ children }) {
-    return (
-        <header>
-           {Children}
-        </header>
-    );
+  return (
+    <header>
+      {children}
+    </header>
+  );
 }
 
-export { TodoHeader }
+export { TodoHeader };
