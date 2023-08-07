@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTodos } from './UseTodos';
+import { useTodos } from '../App/UseTodos';
 import { TodoHeader } from '../TodoHeader';
 import { TodoCounter } from '../TodoCounter';
 import { TodoSearch } from '../TodoSearch';
 import { TodoList } from '../TodoList';
 import { TodoItem } from '../TodoItem';
 import { TodosError } from '../TodosError';
-import { TodosLoading } from '../TodoLoading';
+import { TodosLoading } from '../TodosLoading';
 import { EmptyTodos } from '../EmptyTodos';
 import { TodoForm } from '../TodoForm';
 import { CreateTodoButton } from '../CreateTodoButton';
 import { Modal } from '../Modal';
-import { ChangeAlertWithStorageListener} from '../ChangeAlert'
+import { ChangeAlert } from '../ChangeAlert';
 
 function App() {
   const {
@@ -27,6 +27,7 @@ function App() {
     searchValue,
     setSearchValue,
     addTodo,
+    sincronizeTodos,
   } = useTodos();
   
   return (
@@ -79,7 +80,9 @@ function App() {
         setOpenModal={setOpenModal}
       />
 
-      <ChangeAlertWithStorageListener />
+      <ChangeAlert
+        sincronize={sincronizeTodos}
+      />
     </React.Fragment>
   );
 }
