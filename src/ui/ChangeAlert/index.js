@@ -26,4 +26,3 @@ function ChangeAlert({ sincronize }) {
 }
 
 export { ChangeAlert };
-
