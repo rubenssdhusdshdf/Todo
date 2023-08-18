@@ -4,6 +4,7 @@ import '../TodoIcon/TodoIcon.css';
 
 
 const iconTypes = {
+  "edit": (color) => <EditSVG className="Icon-svg" fill={color}/>,
   "check": (color) => <CheckSVG className="Icon-svg" fill={color}/>,
   "delete":(color) => <DeleteSVG className="Icon-svg" fill={color} />,
 };
