@@ -1,6 +1,6 @@
 import React from 'react';
-import './TodoForm.css';
 import { useNavigate } from 'react-router-dom';
+import './TodoForm.css';
 
 function TodoForm(props) {
   const navigate = useNavigate();
@@ -12,11 +12,10 @@ function TodoForm(props) {
   const onCancel = () => {
     navigate('/');
   };
-
   const onSubmit = (event) => {
     event.preventDefault();
-    navigate('/')
     props.submitEvent(newTodoValue);
+    navigate('/');
   };
 
   return (
